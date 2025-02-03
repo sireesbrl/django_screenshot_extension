@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Screen Capture Extension",
-  "version": "1.0",
+  "version": "1.2",
   "description": "Extension for capturing screenshots",
   "permissions": ["activeTab", "scripting", "notifications", "storage"],
   "background": {
