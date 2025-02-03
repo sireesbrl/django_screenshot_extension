@@ -2,7 +2,13 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "captureFull") {
         console.log("Capturing screenshot...");
         browser.tabs.captureVisibleTab(null, { format: "png" }, (imageUri) => {
-            uploadScreenshot(imageUri);
+            //uploadScreenshot(imageUri);
+            browser.storage.local.set({screenshotUri: imageUri})
+            .then(() => {
+                return browser.tabs.create({url: "editor.html"});
+            })
+            .catch(error => console.error("Storage failed:", error));
+
         });
     }
 
@@ -35,7 +41,16 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 
     if (request.action === "croppedScreenshot") {
-        uploadScreenshot(request.imageUri);
+        //uploadScreenshot(request.imageUri);
+        browser.storage.local.set({screenshotUri: request.imageUri})
+        .then(() => {
+            return browser.tabs.create({url: "editor.html"});
+        })
+        .catch(error => console.error("Storage failed:", error));
+    }
+
+    if (request.action === "saveScreenshot") {
+        uploadScreenshot(request.screenshotUri);
     }
 });
 

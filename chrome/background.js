@@ -2,7 +2,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "captureFull") {
         console.log("Capturing screenshot...");
         chrome.tabs.captureVisibleTab(null, { format: "png" }, (imageUri) => {
-            uploadScreenshot(imageUri);
+            //uploadScreenshot(imageUri);
+            chrome.storage.local.set({screenshotUri: imageUri})
+            .then(() => {
+                return chrome.tabs.create({url: "editor.html"});
+            })
+            .catch(error => console.error("Storage failed:", error));
+
         });
     }
 
@@ -11,10 +17,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const tabId = tabs[0].id;
 
-            chrome.scripting.executeScript({
-                target: { tabId: tabId },
-                files: ["content.js"]
-            })
+            chrome.tabs.executeScript(
+                tabId,
+                { file: "content.js" }
+            )
             .then(
                 () => {
                     chrome.tabs.sendMessage(tabId, { action: "startSelection" });
@@ -35,7 +41,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 
     if (request.action === "croppedScreenshot") {
-        uploadScreenshot(request.imageUri);
+        //uploadScreenshot(request.imageUri);
+        chrome.storage.local.set({screenshotUri: request.imageUri})
+        .then(() => {
+            return chrome.tabs.create({url: "editor.html"});
+        })
+        .catch(error => console.error("Storage failed:", error));
+    }
+
+    if (request.action === "saveScreenshot") {
+        uploadScreenshot(request.screenshotUri);
     }
 });
 
@@ -66,13 +81,13 @@ function uploadScreenshot(imageUri) {
         body: formData
     })
     .then(response => response.json())
-    .then(data => {
-        chrome.notifications.create({
-            type: "basic",
-            title: "Screenshot uploaded",
-            iconUrl: "icon.png",
-            message: "Image Url: " + data["image_url"]
-         });
+    .then(data => { 
+        chrome.notifications.create("screenshot-notification", {
+           type: "basic",
+           title: "Screenshot uploaded",
+           iconUrl: "icon.png",
+           message: "Image Url: " + data["image_url"]
+        });
         //console.log("Image Url:", data["image_url"]);
         return chrome.storage.local.set({
             "lastScreenshotUrl": data["image_url"]

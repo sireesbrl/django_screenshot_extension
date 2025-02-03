@@ -3,7 +3,7 @@
   "name": "Screen Capture Extension",
   "version": "1.2",
   "description": "Extension for capturing screenshots",
-  "permissions": ["activeTab", "scripting", "notifications", "storage"],
+  "permissions": ["activeTab", "tabs", "scripting", "notifications", "storage"],
   "host_permissions": ["http://127.0.0.1:8000/api/upload/"],
   "background": {
     "service_worker": "background.js"

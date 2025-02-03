@@ -161,7 +161,6 @@
                 createOverlay();
             } 
             if (request.action === "cropScreenshot") {
-                console.log("Cropping screenshot...");
                 cropScreenshot(request.imageUri, request.coords);
             }
         });
