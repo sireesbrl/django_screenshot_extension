@@ -10,11 +10,17 @@
 <body>
     <div class="editor-container">
         <canvas id="canvas"></canvas>
-        <div class="controls">
-            <button id="saveBtn">Save and Upload</button>
-            <button id="addTextBtn">Add Text</button>
-            <button id="drawBtn">Draw</button>
-        </div>
+    </div>
+    
+    <div class="menu-bar">
+        <button id="saveBtn">Save</button>
+        <button id="cancelBtn">Cancel</button>
+        <button id="addTextBtn">Add Text</button>
+        <button id="drawBtn">Draw</button>
+        <label for="thicknessInput">Thickness:</label>
+        <input type="number" id="thicknessInput" min="1" max="10" value="2">
+        <label for="colorPicker">Color:</label>
+        <input type="color" id="colorPicker">
     </div>
 </body>
 </html>

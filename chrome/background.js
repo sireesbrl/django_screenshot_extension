@@ -17,10 +17,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const tabId = tabs[0].id;
 
-            chrome.tabs.executeScript(
-                tabId,
-                { file: "content.js" }
-            )
+            chrome.scripting.executeScript({
+                target: { tabId: tabId },
+                files: ["content.js"]
+            })
             .then(
                 () => {
                     chrome.tabs.sendMessage(tabId, { action: "startSelection" });
