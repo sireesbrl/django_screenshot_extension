@@ -11,16 +11,24 @@
     <div class="editor-container">
         <canvas id="canvas"></canvas>
     </div>
-    
+
     <div class="menu-bar">
-        <button id="saveBtn">Save</button>
-        <button id="cancelBtn">Cancel</button>
-        <button id="addTextBtn">Add Text</button>
-        <button id="drawBtn">Draw</button>
-        <label for="thicknessInput">Thickness:</label>
-        <input type="number" id="thicknessInput" min="1" max="10" value="2">
-        <label for="colorPicker">Color:</label>
-        <input type="color" id="colorPicker">
+        <button id="saveBtn" title="Save your changes">Save</button>
+        <button id="cancelBtn" title="Cancel and close">Cancel</button>
+        <button id="clearBtn" title="Clear the canvas">Clear</button>
+        
+        <div class="tool-group">
+            <button id="addTextBtn" title="Add editable text">Add Text</button>
+            <button id="drawBtn" title="Enable/Disable drawing">Draw</button>
+        </div>
+
+        <div class="tool-group">
+            <label for="thicknessInput">Thickness:</label>
+            <input type="number" id="thicknessInput" min="1" max="10" value="2">
+            
+            <label for="colorPicker">Color:</label>
+            <input type="color" id="colorPicker">
+        </div>
     </div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 (() => {
-    let selectionBox, overlay, startX, startY, endX, endY;
+    let selectionBox, overlay, message, startX, startY, endX, endY;
     let isSelecting = false;
 
     function createOverlay() {
@@ -76,6 +76,22 @@
         endY = event.clientY;
 
         document.removeEventListener("mousemove", onMouseMove);
+
+        message = document.createElement("div");
+        message.textContent = "Press Enter to Confirm, Esc to Cancel";
+        Object.assign(message.style, {
+            position: "absolute",
+            left: Math.min(startX, endX) + "px",
+            top: Math.min(startY, endY) - 30 + "px",
+            background: "rgba(0, 0, 0, 0.7)",
+            color: "white",
+            padding: "5px 10px",
+            borderRadius: "5px",
+            zIndex: "9999",
+            fontSize: "14px"
+        });
+
+        document.body.appendChild(message);
     }
 
     function onKeyDown(event) {
@@ -104,7 +120,6 @@
                 }
             });
         }, 100);
-        
     }
 
     function cancelSelection() {
@@ -117,7 +132,8 @@
         if (overlay) {
             overlay.removeEventListener("mousedown", onMouseDown);
             overlay.remove();
-        };
+        }
+        if (message) message.remove();
 
         document.removeEventListener("mousemove", onMouseMove);
         document.removeEventListener("mouseup", onMouseUp);
@@ -126,7 +142,6 @@
         isSelecting = false;
     }
 
-    
     function cropScreenshot(imageUri, coords) {
         console.log("Cropping screenshot...");
         let img = new Image();
@@ -138,13 +153,13 @@
             
             canvas.width = coords.width;
             canvas.height = coords.height;
-    
+
             ctx.drawImage(
                 img, 
-                coords.x, coords.y, coords.width, coords.height, // Source (full image)
-                0, 0, coords.width, coords.height // Destination (cropped)
+                coords.x, coords.y, coords.width, coords.height,
+                0, 0, coords.width, coords.height
             );
-            
+
             let croppedImageUri = canvas.toDataURL("image/png");
 
             chrome.runtime.sendMessage({
@@ -153,7 +168,7 @@
             });
         };
     }
-    
+
     if (!window.hasSelectionAreaMessageListener) {
         chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             if (request.action === "startSelection") {

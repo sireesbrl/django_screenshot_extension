@@ -1,35 +1,63 @@
 body {
-    width: 250px;
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-family: Arial, sans-serif;
-    background: #f4f4f4;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    width: 300px;
     margin: 0;
 }
 
 .container {
+    background: #e0e0e0;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 10px #b8b8b8, -5px -5px 10px #ffffff;
     text-align: center;
 }
 
-h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #333;
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px #ffffff, -1px -1px 2px #b8b8b8;
 }
 
 button {
-    background: #007bff;
-    color: white;
+    background: #e0e0e0;
     border: none;
-    padding: 10px 15px;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin: 10px;
     font-size: 16px;
-    border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    outline: none;
+    box-shadow: 5px 5px 10px #b8b8b8, -5px -5px 10px #ffffff;
+    transition: all 0.3s ease;
 }
 
-button:hover {
-    background: #0056b3;
+button:active {
+    box-shadow: inset 3px 3px 6px #b8b8b8, inset -3px -3px 6px #ffffff;
+}
+
+.screenshot-container {
+    margin-top: 15px;
+}
+
+.screenshot-link {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #b8b8b8, -5px -5px 10px #ffffff;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.screenshot-link:hover {
+    box-shadow: inset 3px 3px 6px #b8b8b8, inset -3px -3px 6px #ffffff;
 }

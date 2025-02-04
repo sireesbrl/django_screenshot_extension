@@ -7,6 +7,9 @@
     const drawBtn = document.getElementById('drawBtn');
     const thicknessInput = document.getElementById('thicknessInput');
     const colorPicker = document.getElementById('colorPicker');
+    const clearBtn = document.getElementById('clearBtn');
+
+    let loadedImage = null;
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -16,6 +19,7 @@
         if (screenshotUri) {
             const image = new Image();
             image.onload = () => {
+                loadedImage = image;
                 canvas.width = image.width;
                 canvas.height = image.height;
                 ctx.drawImage(image, 0, 0);
@@ -115,7 +119,6 @@
             textBox.remove();
         });
 
-        
         textBoxes = [];
 
         const editedScreenshotUri = canvas.toDataURL();
@@ -123,9 +126,20 @@
             action: 'saveScreenshot',
             screenshotUri: editedScreenshotUri
         });
-
-        setTimeout(() => {
+        setInterval(() => {
             window.close();
-        }, 100);
+        }, 300);
+    });
+
+    clearBtn.addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (loadedImage) {
+            ctx.drawImage(loadedImage, 0, 0);
+        }
+
+        textBoxes.forEach((textBox) => {
+            textBox.remove();
+        });
+        textBoxes = [];
     });
 })();
