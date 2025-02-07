@@ -2,7 +2,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "captureFull") {
         console.log("Capturing screenshot...");
         chrome.tabs.captureVisibleTab(null, { format: "png" }, (imageUri) => {
-            //uploadScreenshot(imageUri);
             chrome.storage.local.set({screenshotUri: imageUri})
             .then(() => {
                 return chrome.tabs.create({url: "editor.html"});
@@ -41,7 +40,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 
     if (request.action === "croppedScreenshot") {
-        //uploadScreenshot(request.imageUri);
         chrome.storage.local.set({screenshotUri: request.imageUri})
         .then(() => {
             return chrome.tabs.create({url: "editor.html"});
@@ -82,15 +80,22 @@ function uploadScreenshot(imageUri) {
     })
     .then(response => response.json())
     .then(data => { 
-        chrome.notifications.create("screenshot-notification", {
-           type: "basic",
-           title: "Screenshot uploaded",
-           iconUrl: "icon.png",
-           message: "Image Url: " + data["image_url"]
+        // chrome.notifications.create("screenshot-notification", {
+        //    type: "basic",
+        //    title: "Screenshot uploaded",
+        //    iconUrl: "icon.png",
+        //    message: "Image Url: " + data["image_url"]
+        // });
+
+        chrome.notifications.create("tiny-url-notification", {
+            type: "basic",
+            title: "Screenshot uploaded",
+            iconUrl: "icon.png",
+            message: "Tiny URL: " + data["tiny_url"]
         });
-        //console.log("Image Url:", data["image_url"]);
+
         return chrome.storage.local.set({
-            "lastScreenshotUrl": data["image_url"]
+            "lastScreenshotUrl": data["tiny_url"]
         });
     })
     .catch(error => console.error("Upload failed:", error));
