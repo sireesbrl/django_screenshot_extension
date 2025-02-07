@@ -80,13 +80,6 @@ function uploadScreenshot(imageUri) {
     })
     .then(response => response.json())
     .then(data => { 
-        // chrome.notifications.create("screenshot-notification", {
-        //    type: "basic",
-        //    title: "Screenshot uploaded",
-        //    iconUrl: "icon.png",
-        //    message: "Image Url: " + data["image_url"]
-        // });
-
         chrome.notifications.create("tiny-url-notification", {
             type: "basic",
             title: "Screenshot uploaded",

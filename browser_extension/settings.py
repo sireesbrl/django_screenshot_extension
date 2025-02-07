@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "api.apps.ApiConfig",
+    "tiny_url.apps.TinyUrlConfig",
 ]
 
 MIDDLEWARE = [
