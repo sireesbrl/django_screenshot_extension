@@ -14,6 +14,15 @@
     let transformer = new Konva.Transformer();
     backgroundLayer.add(transformer);
 
+    stage.on('click', (e) => {
+        if (e.target === stage) {
+            transformer.nodes([]);
+        } else {
+            transformer.nodes([e.target]);
+        }
+        backgroundLayer.batchDraw();
+    });
+
     let loadedImage = null;
     browser.storage.local.get('screenshotUri').then(result => {
         const screenshotUri = result.screenshotUri;
@@ -205,7 +214,7 @@
                     x: stage.width() / 2,
                     y: stage.height() / 2,
                     radius: 50,
-                    fill: hexToRgba(selectedColor, 0.3),
+                    //fill: hexToRgba(selectedColor, 0.3),
                     stroke: selectedColor,
                     strokeWidth: parseInt(selectedThickness),
                     draggable: true
@@ -217,7 +226,7 @@
                     y: stage.height() / 2 - 50,
                     width: 100,
                     height: 100,
-                    fill: hexToRgba(selectedColor, 0.3),
+                    //fill: hexToRgba(selectedColor, 0.3),
                     stroke: selectedColor,
                     strokeWidth: parseInt(selectedThickness),
                     draggable: true
