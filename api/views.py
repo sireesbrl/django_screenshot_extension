@@ -1,4 +1,5 @@
 from rest_framework.generics import CreateAPIView
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from .serializers import ScreenshotSerializer
 from .models import Screenshot
@@ -6,6 +7,7 @@ from .models import Screenshot
 class ScreenshotUploadView(CreateAPIView):
     queryset = Screenshot.objects.all()
     serializer_class = ScreenshotSerializer
+    parser_classes = (MultiPartParser, FormParser)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
