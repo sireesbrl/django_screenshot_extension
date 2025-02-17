@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "gdstorage",
     "corsheaders",
     "rest_framework",
     "django_celery_results",
@@ -60,8 +61,11 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = "browser_extension.urls"
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+# MEDIA_URL = "/media/"
+# MEDIA_ROOT = BASE_DIR / "media"
+
+GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = f"{BASE_DIR}/credentials.json"
+# GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = '<base google drive path for file uploads>'
 
 TEMPLATES = [
     {

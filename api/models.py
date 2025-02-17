@@ -2,10 +2,12 @@ from django.db import models
 from PIL import Image
 from io import BytesIO
 from django.core.files.base import ContentFile
+from gdstorage.storage import GoogleDriveStorage
 
+gd_storage = GoogleDriveStorage()
 
 class Screenshot(models.Model):
-    image = models.ImageField(upload_to="screenshots")
+    image = models.ImageField(upload_to="screenshots", storage=gd_storage)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
