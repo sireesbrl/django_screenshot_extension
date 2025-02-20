@@ -11,6 +11,19 @@ class ScreenshotUploadView(CreateAPIView):
     parser_classes = (MultiPartParser, FormParser)
 
     def create(self, request, *args, **kwargs):
+        """
+        Handle POST requests to the API endpoint. The request body should contain
+        a field named 'image' with the image data.
+
+        If the request is valid, it will be saved and a response with a 201 status
+        code will be returned. The response body will contain a JSON object with a
+        single key, 'tiny_url', which will contain the short URL for the uploaded
+        image.
+
+        If the request is invalid, a response with a 400 status code will be
+        returned. The response body will contain a JSON object with a single key,
+        'error', which will contain a string describing the error.
+        """
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             screenshot = serializer.save()
