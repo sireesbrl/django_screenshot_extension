@@ -4,5 +4,6 @@ media/
 *.sqlite3
 *.db
 *.rdb
+.env
 credentials.json
 
