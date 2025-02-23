@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "gdstorage",
+    "storages",
     "corsheaders",
     "rest_framework",
     "django_celery_results",
@@ -65,7 +65,15 @@ ROOT_URLCONF = "browser_extension.urls"
 # MEDIA_ROOT = BASE_DIR / "media"
 
 GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = f"{BASE_DIR}/credentials.json"
-# GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = '<base google drive path for file uploads>'
+GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = "media"
+STORAGES = {
+    "default": {
+        "BACKEND": "api.gdrivestorage.GoogleDriveStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 TEMPLATES = [
     {
