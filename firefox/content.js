@@ -108,18 +108,16 @@
         if (!isSelecting) return;
 
         cleanup();
-        
-        setTimeout(() => {
-            browser.runtime.sendMessage({
-                action: "captureSelectedArea",
-                coords: {
-                    x: Math.min(startX, endX),
-                    y: Math.min(startY, endY),
-                    width: Math.abs(endX - startX),
-                    height: Math.abs(endY - startY)
-                }
-            });
-        }, 100);
+
+        browser.runtime.sendMessage({
+            action: "captureSelectedArea",
+            coords: {
+                x: Math.min(startX, endX),
+                y: Math.min(startY, endY),
+                width: Math.abs(endX - startX),
+                height: Math.abs(endY - startY)
+            }
+        });
     }
 
     function cancelSelection() {
@@ -144,29 +142,27 @@
 
     function cropScreenshot(imageUri, coords) {
         console.log("Cropping screenshot...");
-        let img = new Image();
-        img.src = imageUri;
-        
-        img.onload = function () {
-            let canvas = document.createElement("canvas");
-            let ctx = canvas.getContext("2d");
-            
-            canvas.width = coords.width;
-            canvas.height = coords.height;
+        const canvas = document.createElement("canvas");
+        canvas.width = coords.width;
+        canvas.height = coords.height;
+        const ctx = canvas.getContext("2d");
 
+        const image = new Image();
+        image.onload = function() {
             ctx.drawImage(
-                img, 
+                image, 
                 coords.x, coords.y, coords.width, coords.height,
                 0, 0, coords.width, coords.height
             );
 
-            let croppedImageUri = canvas.toDataURL("image/png");
+            const croppedImageUri = canvas.toDataURL("image/png");
 
             browser.runtime.sendMessage({
                 action: "croppedScreenshot",
                 imageUri: croppedImageUri
             });
         };
+        image.src = imageUri;
     }
 
     if (!window.hasSelectionAreaMessageListener) {
